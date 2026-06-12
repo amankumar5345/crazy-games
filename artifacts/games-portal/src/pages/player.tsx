@@ -2,10 +2,17 @@ import { useParams, Link } from "wouter";
 import { games } from "../data/games";
 import { ArrowLeft, Maximize2, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useSoundEffects } from "@/hooks/useSoundEffects";
+import { useEffect } from "react";
 
 export default function Player() {
   const { gameId } = useParams();
   const game = games.find((g) => g.id === gameId);
+  const { playLaunch, playClick } = useSoundEffects();
+
+  useEffect(() => {
+    if (game) playLaunch();
+  }, [game?.id]);
 
   if (!game) {
     return (
@@ -23,11 +30,16 @@ export default function Player() {
 
   return (
     <div className="h-screen w-full flex flex-col bg-background overflow-hidden selection:bg-primary selection:text-primary-foreground">
-      {/* Player Header */}
       <header className="h-14 shrink-0 border-b border-white/10 bg-card flex items-center justify-between px-4 z-10">
         <div className="flex items-center gap-4">
           <Link href="/">
-            <Button variant="ghost" size="icon" className="h-8 w-8 rounded-full border-white/10 hover:bg-white/10 hover:text-primary">
+            <Button
+              variant="ghost"
+              size="icon"
+              className="h-8 w-8 rounded-full border-white/10 hover:bg-white/10 hover:text-primary"
+              onClick={playClick}
+              data-testid="button-back"
+            >
               <ArrowLeft className="w-4 h-4" />
             </Button>
           </Link>
@@ -40,25 +52,28 @@ export default function Player() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             size="sm"
             className="text-muted-foreground hover:text-foreground hidden sm:flex"
-            onClick={() => window.open(game.url, '_blank')}
+            onClick={() => { playClick(); window.open(game.url, "_blank"); }}
+            data-testid="button-open-new-tab"
           >
             <ExternalLink className="w-4 h-4 mr-2" />
             Open in new tab
           </Button>
-          <Button 
+          <Button
             variant="outline"
             size="sm"
             className="border-primary/50 text-primary hover:bg-primary hover:text-primary-foreground shadow-[0_0_10px_rgba(0,255,255,0.2)]"
             onClick={() => {
-              const iframe = document.getElementById('game-iframe');
+              playClick();
+              const iframe = document.getElementById("game-iframe");
               if (iframe && iframe.requestFullscreen) {
                 iframe.requestFullscreen();
               }
             }}
+            data-testid="button-fullscreen"
           >
             <Maximize2 className="w-4 h-4 mr-2" />
             Fullscreen
@@ -66,7 +81,6 @@ export default function Player() {
         </div>
       </header>
 
-      {/* Game Embed */}
       <main className="flex-1 w-full relative bg-black">
         <iframe
           id="game-iframe"

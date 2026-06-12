@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Search, Gamepad2, Play } from "lucide-react";
 import { motion } from "framer-motion";
+import { useSoundEffects } from "@/hooks/useSoundEffects";
 
 const categories: ("All" | GameCategory)[] = [
   "All",
@@ -19,6 +20,7 @@ const categories: ("All" | GameCategory)[] = [
 export default function Home() {
   const [search, setSearch] = useState("");
   const [activeCategory, setActiveCategory] = useState<"All" | GameCategory>("All");
+  const { playClick, playHover } = useSoundEffects();
 
   const filteredGames = games.filter((game) => {
     const matchesSearch = game.title.toLowerCase().includes(search.toLowerCase());
@@ -41,7 +43,6 @@ export default function Home() {
 
   return (
     <div className="min-h-screen bg-background text-foreground selection:bg-primary selection:text-primary-foreground">
-      {/* Header */}
       <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-background/80 backdrop-blur-md">
         <div className="container mx-auto px-4 h-16 flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -50,7 +51,7 @@ export default function Home() {
             </div>
             <span className="font-bold text-xl tracking-tight uppercase">GameVault</span>
           </div>
-          
+
           <div className="relative w-full max-w-sm hidden md:block">
             <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
             <Input
@@ -58,13 +59,13 @@ export default function Home() {
               onChange={(e) => setSearch(e.target.value)}
               placeholder="Search games..."
               className="pl-9 bg-black/50 border-white/10 focus-visible:ring-primary focus-visible:ring-offset-0 focus-visible:border-primary transition-all rounded-full"
+              data-testid="input-search"
             />
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8 md:py-12">
-        {/* Mobile Search */}
         <div className="relative w-full mb-8 md:hidden">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 text-muted-foreground w-4 h-4" />
           <Input
@@ -72,29 +73,29 @@ export default function Home() {
             onChange={(e) => setSearch(e.target.value)}
             placeholder="Search games..."
             className="pl-9 bg-black/50 border-white/10 focus-visible:ring-primary rounded-full"
+            data-testid="input-search-mobile"
           />
         </div>
 
-        {/* Categories */}
         <div className="flex flex-wrap gap-2 mb-10 pb-2">
           {categories.map((cat) => (
             <button
               key={cat}
-              onClick={() => setActiveCategory(cat)}
+              onClick={() => { setActiveCategory(cat); playClick(); }}
               className={`px-4 py-1.5 rounded-full text-sm font-medium transition-all duration-200 ${
                 activeCategory === cat
                   ? "bg-primary text-primary-foreground shadow-[0_0_15px_rgba(0,255,255,0.3)]"
                   : "bg-white/5 text-muted-foreground hover:bg-white/10 hover:text-foreground"
               }`}
+              data-testid={`button-category-${cat.toLowerCase()}`}
             >
               {cat}
             </button>
           ))}
         </div>
 
-        {/* Grid */}
         {filteredGames.length > 0 ? (
-          <motion.div 
+          <motion.div
             variants={container}
             initial="hidden"
             animate="show"
@@ -103,10 +104,15 @@ export default function Home() {
             {filteredGames.map((game) => (
               <motion.div key={game.id} variants={item}>
                 <Link href={`/play/${game.id}`}>
-                  <div className="group relative rounded-xl overflow-hidden bg-card border border-white/5 hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,255,255,0.15)] hover:-translate-y-1 cursor-pointer flex flex-col h-full">
+                  <div
+                    className="group relative rounded-xl overflow-hidden bg-card border border-white/5 hover:border-primary/50 transition-all duration-300 hover:shadow-[0_0_30px_rgba(0,255,255,0.15)] hover:-translate-y-1 cursor-pointer flex flex-col h-full"
+                    onMouseEnter={playHover}
+                    onClick={playClick}
+                    data-testid={`card-game-${game.id}`}
+                  >
                     <div className="aspect-video relative overflow-hidden bg-black/50">
-                      <img 
-                        src={game.thumbnail} 
+                      <img
+                        src={game.thumbnail}
                         alt={game.title}
                         className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                       />

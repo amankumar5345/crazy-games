@@ -5,6 +5,7 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import NotFound from "@/pages/not-found";
 import Home from "@/pages/home";
 import Player from "@/pages/player";
+import MusicPlayer from "@/components/MusicPlayer";
 import { useEffect } from "react";
 
 const queryClient = new QueryClient();
@@ -21,7 +22,6 @@ function Router() {
 
 function ThemeProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
-    // Force dark mode
     document.documentElement.classList.add("dark");
   }, []);
   return <>{children}</>;
@@ -35,6 +35,7 @@ function App() {
           <WouterRouter base={import.meta.env.BASE_URL.replace(/\/$/, "")}>
             <Router />
           </WouterRouter>
+          <MusicPlayer />
           <Toaster />
         </TooltipProvider>
       </ThemeProvider>
