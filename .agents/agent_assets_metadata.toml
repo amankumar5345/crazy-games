@@ -1,0 +1,62 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "jvsYISCjp2GeM8gbzutdm"
+uri = "file://artifacts/games-portal/src/assets/images/2048.png"
+type = "image"
+title = "2048 puzzle pixel art"
+
+[[generated]]
+id = "byfff99HKgRS8VE9McdqE"
+uri = "file://artifacts/games-portal/src/assets/images/dino.png"
+type = "image"
+title = "Dino run pixel art"
+
+[[generated]]
+id = "nVj-CxP7UTa8WzJjhGd9Q"
+uri = "file://artifacts/games-portal/src/assets/images/dogeminer.png"
+type = "image"
+title = "Doge miner pixel art"
+
+[[generated]]
+id = "zSqCdcq44zhsnmPetvUP7"
+uri = "file://artifacts/games-portal/src/assets/images/bitlife.png"
+type = "image"
+title = "Life simulation pixel art"
+
+[[generated]]
+id = "7Pof2_9tNVDY8zM8nGFSP"
+uri = "file://artifacts/games-portal/src/assets/images/dough.png"
+type = "image"
+title = "Cookie idle pixel art"
+
+[[generated]]
+id = "2nsE8AmR8HHqXGjuXPw9T"
+uri = "file://artifacts/games-portal/src/assets/images/bloons1.png"
+type = "image"
+title = "Monkey bloons pixel art"
+
+[[generated]]
+id = "aUNPC_QJ8kvDfRKcqJ1z7"
+uri = "file://artifacts/games-portal/src/assets/images/bloons2.png"
+type = "image"
+title = "Monkey tower defense pixel art"
+
+[[generated]]
+id = "ccdyxSLxn1G-nWmUbXoDK"
+uri = "file://artifacts/games-portal/src/assets/images/baskets.png"
+type = "image"
+title = "Basketball pixel art"
+
+[[generated]]
+id = "FgT776N0wyUXvHyN4YGOe"
+uri = "file://artifacts/games-portal/src/assets/images/firewater1.png"
+type = "image"
+title = "Fire and water pixel art"
+
+[[generated]]
+id = "UHS9EoxkSrZ-QvCzdPYx3"
+uri = "file://artifacts/games-portal/src/assets/images/ages-of-conflict.png"
+type = "image"
+title = "Strategy map pixel art"
