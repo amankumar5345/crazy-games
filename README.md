@@ -145,7 +145,4 @@ Add an entry to `artifacts/games-portal/src/data/music.ts` with the
 song's YouTube video ID.
 
 ---
-
-## License
-
-Add a license here if you intend to open-source this (e.g. MIT).
+.
